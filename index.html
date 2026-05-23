@@ -3,161 +3,65 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Imagination Studio</title>
+    <title>Imagination Studio AI</title>
     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <style>
       :root {
-        color-scheme: light;
-        --bg: #f7f8ff;
-        --panel: #ffffff;
+        --bg: #f4f7ff;
+        --panel: #fff;
         --text: #1f2d3d;
-        --muted: #5c6f82;
+        --muted: #607087;
         --accent: #4b5cf0;
-        --accent-soft: #edf0ff;
-        --shadow: 0 14px 35px rgba(47, 60, 174, 0.15);
+        --accent-2: #7a40ff;
+        --border: #e9ecff;
+        --ok: #0f9d6d;
+        --danger: #c83b56;
       }
-
       * { box-sizing: border-box; }
-
       body {
         margin: 0;
-        font-family: "Inter", "Segoe UI", Roboto, sans-serif;
+        font-family: Inter, "Segoe UI", Roboto, sans-serif;
         color: var(--text);
-        background: radial-gradient(circle at 15% 20%, #f0f4ff 0%, var(--bg) 35%),
-          radial-gradient(circle at 80% 0%, #eaf8ff 0%, transparent 45%),
-          var(--bg);
-        min-height: 100vh;
+        background: radial-gradient(circle at 10% 10%, #eef2ff, #f9fbff 50%, #f4f7ff);
       }
-
-      .app-shell {
-        max-width: 1100px;
-        margin: 0 auto;
-        padding: 2.5rem 1rem 3rem;
-      }
-
-      .hero {
-        text-align: center;
-        margin-bottom: 2rem;
-      }
-
-      .hero h1 {
-        font-size: clamp(1.9rem, 3vw, 3rem);
-        margin: 0;
-      }
-
-      .hero p {
-        color: var(--muted);
-        font-size: 1.05rem;
-        max-width: 780px;
-        margin: 0.9rem auto 0;
-        line-height: 1.6;
-      }
-
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-        gap: 1rem;
-      }
-
-      .card {
+      .app { max-width: 1100px; margin: 0 auto; padding: 2rem 1rem 3rem; }
+      .hero { text-align: center; margin-bottom: 1.5rem; }
+      .hero h1 { margin: 0; font-size: clamp(2rem, 4vw, 3rem); }
+      .hero p { color: var(--muted); max-width: 760px; margin: .75rem auto 0; line-height: 1.5; }
+      .panel {
         background: var(--panel);
+        border: 1px solid var(--border);
         border-radius: 18px;
-        padding: 1.2rem;
-        box-shadow: var(--shadow);
-        border: 1px solid #eef1ff;
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
-      }
-
-      .card h3 {
-        margin: 0;
-        font-size: 1.08rem;
-      }
-
-      .card p {
-        margin: 0;
-        color: var(--muted);
-        line-height: 1.45;
-        flex: 1;
-      }
-
-      .big-emoji { font-size: 1.8rem; }
-
-      .btn {
-        border: none;
-        border-radius: 12px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: 0.2s ease;
-        padding: 0.7rem 1rem;
-      }
-
-      .btn.primary {
-        background: var(--accent);
-        color: white;
-      }
-
-      .btn.primary:hover { transform: translateY(-1px); }
-
-      .btn.ghost {
-        background: var(--accent-soft);
-        color: var(--accent);
-      }
-
-      .workspace {
-        margin-top: 1.6rem;
-        background: var(--panel);
-        border-radius: 20px;
-        box-shadow: var(--shadow);
-        border: 1px solid #eef1ff;
-        padding: 1.3rem;
-      }
-
-      .workspace-head {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 0.8rem;
-      }
-
-      textarea {
-        width: 100%;
-        min-height: 120px;
-        margin-top: 1rem;
-        border: 1px solid #d6ddff;
-        border-radius: 14px;
-        padding: 0.9rem;
-        font-size: 0.98rem;
-        font-family: inherit;
-        resize: vertical;
-      }
-
-      .render-box {
-        margin-top: 1rem;
-        background: #fbfcff;
-        border: 1px solid #e9ecff;
-        border-radius: 14px;
+        box-shadow: 0 14px 35px rgba(75, 92, 240, .14);
         padding: 1rem;
       }
-
-      .chips {
-        margin-top: 0.7rem;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
+      .grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(210px,1fr)); gap: .9rem; }
+      .tool { border: 1px solid var(--border); border-radius: 14px; padding: .9rem; background:#fcfdff; }
+      .tool h3 { margin: .35rem 0; font-size: 1.02rem; }
+      .tool p { margin: 0 0 .7rem; color: var(--muted); font-size: .92rem; }
+      .row { display: grid; gap: .9rem; grid-template-columns: 1fr; margin-top: 1rem; }
+      @media (min-width: 900px){ .row { grid-template-columns: 1.15fr .85fr; } }
+      label { display:block; font-weight: 600; font-size: .92rem; margin-bottom: .4rem; }
+      input, textarea, select {
+        width: 100%; border: 1px solid #d6ddff; border-radius: 12px; padding: .72rem .8rem;
+        font: inherit; background: #fff;
       }
-
-      .chip {
-        padding: 0.35rem 0.65rem;
-        border-radius: 999px;
-        font-size: 0.84rem;
-        color: #334b85;
-        background: #eaf0ff;
+      textarea { min-height: 130px; resize: vertical; }
+      .controls { display: flex; gap: .7rem; flex-wrap: wrap; margin-top: .8rem; }
+      button {
+        border: 0; border-radius: 12px; padding: .68rem 1rem; font-weight: 700; cursor: pointer;
       }
+      .primary { color: white; background: linear-gradient(135deg,var(--accent),var(--accent-2)); }
+      .ghost { background: #ecf1ff; color: #2e4bb3; }
+      .meta { margin-top: .55rem; color: var(--muted); font-size: .86rem; }
+      .active { outline: 2px solid #a9b5ff; }
+      .resultBox { min-height: 330px; display:flex; align-items:center; justify-content:center; background:#fafbff; border:1px dashed #d9e0ff; border-radius:14px; padding:.8rem; }
+      .resultBox img { max-width:100%; max-height:460px; border-radius:12px; border:1px solid #e8ecff; }
+      .status { margin-top: .7rem; font-size: .92rem; }
+      .ok { color: var(--ok); }
+      .danger { color: var(--danger); }
     </style>
   </head>
   <body>
@@ -165,62 +69,134 @@
 
     <script type="text/babel">
       const tools = [
-        { id: "emoji", label: "Emoji Maker", icon: "😀", hint: "Build playful expressions and moods." },
-        { id: "icon", label: "Icon Forge", icon: "🧩", hint: "Design symbols for brands and apps." },
-        { id: "image", label: "Image Canvas", icon: "🖼️", hint: "Describe art concepts and scene ideas." },
-        { id: "sand", label: "Sand Art Lab", icon: "🏖️", hint: "Sketch flowing patterns and dunes." },
+        { id: "emoji", label: "Emoji Maker", icon: "😀", hint: "Generate a custom emoji style image." },
+        { id: "icon", label: "Icon Forge", icon: "🧩", hint: "Create app/product style icons." },
+        { id: "image", label: "Image Canvas", icon: "🖼️", hint: "Generate full creative images." },
+        { id: "sand", label: "Sand Art Lab", icon: "🏖️", hint: "Craft textured sand-art visuals." },
       ];
+
+      function systemPromptFor(tool) {
+        const shared = "Return a clean, high-quality single image based on the user prompt.";
+        if (tool.id === "emoji") return `${shared} Style: emoji, centered subject, transparent or simple background, vibrant colors.`;
+        if (tool.id === "icon") return `${shared} Style: modern iconography, minimal, bold shape language, app-ready.`;
+        if (tool.id === "sand") return `${shared} Style: sand art texture, flowing dunes, tactile grain details.`;
+        return `${shared} Style: artistic digital illustration with strong composition.`;
+      }
 
       function App() {
         const [selected, setSelected] = React.useState(tools[0]);
+        const [apiKey, setApiKey] = React.useState("");
         const [prompt, setPrompt] = React.useState("");
+        const [size, setSize] = React.useState("1024x1024");
+        const [result, setResult] = React.useState("");
+        const [status, setStatus] = React.useState("");
+        const [error, setError] = React.useState("");
+        const [loading, setLoading] = React.useState(false);
 
-        const sparkText = prompt.trim()
-          ? `✨ Concept for ${selected.label}: ${prompt}`
-          : `Start by choosing ${selected.label} and writing your idea.`;
+        async function createArt() {
+          setError("");
+          setStatus("");
+          if (!apiKey.trim()) {
+            setError("Please enter your OpenAI API key to generate art.");
+            return;
+          }
+          if (!prompt.trim()) {
+            setError("Please describe what you want to create.");
+            return;
+          }
+
+          setLoading(true);
+          setResult("");
+          setStatus(`Generating ${selected.label}...`);
+
+          try {
+            const response = await fetch("https://api.openai.com/v1/images", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${apiKey.trim()}`,
+              },
+              body: JSON.stringify({
+                model: "gpt-image-1",
+                prompt: `${systemPromptFor(selected)}\nUser idea: ${prompt}`,
+                size,
+              }),
+            });
+
+            const data = await response.json();
+            if (!response.ok) {
+              throw new Error(data?.error?.message || "Image generation failed.");
+            }
+
+            const base64 = data?.data?.[0]?.b64_json;
+            if (!base64) throw new Error("No image returned from model.");
+
+            setResult(`data:image/png;base64,${base64}`);
+            setStatus(`Done! Your ${selected.label.toLowerCase()} is ready.`);
+          } catch (e) {
+            setError(e.message || "Unexpected error.");
+          } finally {
+            setLoading(false);
+          }
+        }
 
         return (
-          <main className="app-shell">
+          <main className="app">
             <section className="hero">
-              <h1>Imagination Studio</h1>
-              <p>
-                A clean React-powered creative playground where you can turn your ideas into emojis,
-                icons, images, and mesmerizing sand art concepts.
-              </p>
+              <h1>Imagination Studio AI</h1>
+              <p>Create emojis, icons, images, and sand art from your imagination using real AI generation.</p>
             </section>
 
-            <section className="grid">
-              {tools.map((tool) => (
-                <article key={tool.id} className="card">
-                  <div className="big-emoji" aria-hidden="true">{tool.icon}</div>
-                  <h3>{tool.label}</h3>
-                  <p>{tool.hint}</p>
-                  <button className="btn ghost" onClick={() => setSelected(tool)}>
-                    Open {tool.label}
-                  </button>
-                </article>
-              ))}
-            </section>
-
-            <section className="workspace">
-              <div className="workspace-head">
-                <strong>Current Workspace: {selected.label}</strong>
-                <button className="btn primary">Create Now</button>
+            <section className="panel">
+              <div className="grid">
+                {tools.map((tool) => (
+                  <article key={tool.id} className={`tool ${selected.id === tool.id ? "active" : ""}`}>
+                    <div>{tool.icon}</div>
+                    <h3>{tool.label}</h3>
+                    <p>{tool.hint}</p>
+                    <button className="ghost" onClick={() => setSelected(tool)}>Use {tool.label}</button>
+                  </article>
+                ))}
               </div>
 
-              <textarea
-                placeholder={`Describe your ${selected.label.toLowerCase()} idea...`}
-                value={prompt}
-                onChange={(e) => setPrompt(e.target.value)}
-              ></textarea>
+              <div className="row">
+                <div>
+                  <label>OpenAI API Key</label>
+                  <input type="password" placeholder="sk-..." value={apiKey} onChange={(e)=>setApiKey(e.target.value)} />
+                  <div className="meta">Your key stays in this browser session only.</div>
 
-              <div className="render-box">
-                <strong>Live Concept Preview</strong>
-                <p>{sparkText}</p>
-                <div className="chips">
-                  <span className="chip">Creative</span>
-                  <span className="chip">Friendly UI</span>
-                  <span className="chip">React Driven</span>
+                  <div style={{marginTop:".9rem"}}>
+                    <label>{selected.label} Prompt</label>
+                    <textarea
+                      placeholder={`Describe your ${selected.label.toLowerCase()} idea in detail...`}
+                      value={prompt}
+                      onChange={(e)=>setPrompt(e.target.value)}
+                    />
+                  </div>
+
+                  <div style={{marginTop:".9rem"}}>
+                    <label>Output Size</label>
+                    <select value={size} onChange={(e)=>setSize(e.target.value)}>
+                      <option>1024x1024</option>
+                      <option>1536x1024</option>
+                      <option>1024x1536</option>
+                    </select>
+                  </div>
+
+                  <div className="controls">
+                    <button className="primary" onClick={createArt} disabled={loading}>{loading ? "Generating..." : "Create with AI"}</button>
+                    <button className="ghost" onClick={() => { setPrompt(""); setResult(""); setStatus(""); setError(""); }}>Reset</button>
+                  </div>
+
+                  {status && <div className="status ok">{status}</div>}
+                  {error && <div className="status danger">{error}</div>}
+                </div>
+
+                <div>
+                  <label>Generated Result</label>
+                  <div className="resultBox">
+                    {result ? <img src={result} alt="AI generated result" /> : <span style={{color:"#6e7d96"}}>Your generated art will appear here.</span>}
+                  </div>
                 </div>
               </div>
             </section>
