@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Imagination Studio</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f7f8ff;
+        --panel: #ffffff;
+        --text: #1f2d3d;
+        --muted: #5c6f82;
+        --accent: #4b5cf0;
+        --accent-soft: #edf0ff;
+        --shadow: 0 14px 35px rgba(47, 60, 174, 0.15);
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        font-family: "Inter", "Segoe UI", Roboto, sans-serif;
+        color: var(--text);
+        background: radial-gradient(circle at 15% 20%, #f0f4ff 0%, var(--bg) 35%),
+          radial-gradient(circle at 80% 0%, #eaf8ff 0%, transparent 45%),
+          var(--bg);
+        min-height: 100vh;
+      }
+
+      .app-shell {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 2.5rem 1rem 3rem;
+      }
+
+      .hero {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .hero h1 {
+        font-size: clamp(1.9rem, 3vw, 3rem);
+        margin: 0;
+      }
+
+      .hero p {
+        color: var(--muted);
+        font-size: 1.05rem;
+        max-width: 780px;
+        margin: 0.9rem auto 0;
+        line-height: 1.6;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 1rem;
+      }
+
+      .card {
+        background: var(--panel);
+        border-radius: 18px;
+        padding: 1.2rem;
+        box-shadow: var(--shadow);
+        border: 1px solid #eef1ff;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .card h3 {
+        margin: 0;
+        font-size: 1.08rem;
+      }
+
+      .card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.45;
+        flex: 1;
+      }
+
+      .big-emoji { font-size: 1.8rem; }
+
+      .btn {
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.2s ease;
+        padding: 0.7rem 1rem;
+      }
+
+      .btn.primary {
+        background: var(--accent);
+        color: white;
+      }
+
+      .btn.primary:hover { transform: translateY(-1px); }
+
+      .btn.ghost {
+        background: var(--accent-soft);
+        color: var(--accent);
+      }
+
+      .workspace {
+        margin-top: 1.6rem;
+        background: var(--panel);
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        border: 1px solid #eef1ff;
+        padding: 1.3rem;
+      }
+
+      .workspace-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+      }
+
+      textarea {
+        width: 100%;
+        min-height: 120px;
+        margin-top: 1rem;
+        border: 1px solid #d6ddff;
+        border-radius: 14px;
+        padding: 0.9rem;
+        font-size: 0.98rem;
+        font-family: inherit;
+        resize: vertical;
+      }
+
+      .render-box {
+        margin-top: 1rem;
+        background: #fbfcff;
+        border: 1px solid #e9ecff;
+        border-radius: 14px;
+        padding: 1rem;
+      }
+
+      .chips {
+        margin-top: 0.7rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .chip {
+        padding: 0.35rem 0.65rem;
+        border-radius: 999px;
+        font-size: 0.84rem;
+        color: #334b85;
+        background: #eaf0ff;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const tools = [
+        { id: "emoji", label: "Emoji Maker", icon: "😀", hint: "Build playful expressions and moods." },
+        { id: "icon", label: "Icon Forge", icon: "🧩", hint: "Design symbols for brands and apps." },
+        { id: "image", label: "Image Canvas", icon: "🖼️", hint: "Describe art concepts and scene ideas." },
+        { id: "sand", label: "Sand Art Lab", icon: "🏖️", hint: "Sketch flowing patterns and dunes." },
+      ];
+
+      function App() {
+        const [selected, setSelected] = React.useState(tools[0]);
+        const [prompt, setPrompt] = React.useState("");
+
+        const sparkText = prompt.trim()
+          ? `✨ Concept for ${selected.label}: ${prompt}`
+          : `Start by choosing ${selected.label} and writing your idea.`;
+
+        return (
+          <main className="app-shell">
+            <section className="hero">
+              <h1>Imagination Studio</h1>
+              <p>
+                A clean React-powered creative playground where you can turn your ideas into emojis,
+                icons, images, and mesmerizing sand art concepts.
+              </p>
+            </section>
+
+            <section className="grid">
+              {tools.map((tool) => (
+                <article key={tool.id} className="card">
+                  <div className="big-emoji" aria-hidden="true">{tool.icon}</div>
+                  <h3>{tool.label}</h3>
+                  <p>{tool.hint}</p>
+                  <button className="btn ghost" onClick={() => setSelected(tool)}>
+                    Open {tool.label}
+                  </button>
+                </article>
+              ))}
+            </section>
+
+            <section className="workspace">
+              <div className="workspace-head">
+                <strong>Current Workspace: {selected.label}</strong>
+                <button className="btn primary">Create Now</button>
+              </div>
+
+              <textarea
+                placeholder={`Describe your ${selected.label.toLowerCase()} idea...`}
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+              ></textarea>
+
+              <div className="render-box">
+                <strong>Live Concept Preview</strong>
+                <p>{sparkText}</p>
+                <div className="chips">
+                  <span className="chip">Creative</span>
+                  <span className="chip">Friendly UI</span>
+                  <span className="chip">React Driven</span>
+                </div>
+              </div>
+            </section>
+          </main>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>
